@@ -17,6 +17,19 @@ def writeDatabase(SQL):
 # writeDatabase(".mode box")
 # print(readDatabase("SELECT * FROM tunes;"))
 
+#Create the table if it doesn't exist (db created automatically by sqlite3.connect)
+writeDatabase("""CREATE TABLE IF NOT EXISTS "tunes" (
+name varchar(255) UNIQUE NOT NULL,
+other_names varchar(255),
+writer varchar(255) DEFAULT 'trad' NOT NULL,
+discovered_at varchar(255) NOT NULL,
+record varchar(255),
+notes varchar(255),
+year_learned INT CHECK (year_learned BETWEEN 1000 AND 9999),
+type varchar(255),
+key varchar(255)
+)""")
+
 import tkinter as tk
 
 window = tk.Tk()
@@ -29,6 +42,7 @@ def searchTunes():
     main_frame.pack_forget()
     updateSearchedTunes("")
     search_tunes_frame.pack(fill="both", expand=True)
+    window.geometry("1000x500+50+50")
 
 def searchInputChange(*args):
     current_input = [search_input_box.get()]
